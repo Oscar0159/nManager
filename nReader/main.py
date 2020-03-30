@@ -65,7 +65,7 @@ class MainWidget(QtWidgets.QWidget):
 
         # QPushButton
         self.downloadButton = QtWidgets.QPushButton()
-        pixmap = QtGui.QPixmap('download.ico')
+        pixmap = QtGui.QPixmap('./icon/download_light.ico')
         icon = QtGui.QIcon(pixmap)
         self.downloadButton.setIcon(icon)
         self.downloadButton.setStyleSheet('border-width: 1px;\n'
@@ -73,11 +73,8 @@ class MainWidget(QtWidgets.QWidget):
                                           'border-style: solid;\n'
                                           'padding: 5px;\n'
                                           'border-radius: 5px;\n'
-                                          'outline: none;\n'
-                                          'height: 50px;\n'
-                                          'width: 50px;')
-        self.downloadButton.clicked.connect(self.msg)
-        self.buttonForm = QtWidgets.QLayout()
+                                          'outline: none;')
+        #self.downloadButton.clicked.connect(self.msg)
 
         # QVBoxLayout
         self.layout = QtWidgets.QVBoxLayout()
