@@ -41,11 +41,15 @@ class Ui_MainWindow(object):
 
         # QFormLayout
         self.formLayout = QtWidgets.QFormLayout()
-        self.formLayout.setLabelAlignment(QtCore.Qt.AlignLeading | QtCore.Qt.AlignLeft | QtCore.Qt.AlignTop)
+        # self.formLayout.setLabelAlignment(QtCore.Qt.AlignHCenter | QtCore.Qt.AlignTop)
+        self.formLayout.setFormAlignment(QtCore.Qt.AlignHCenter | QtCore.Qt.AlignTop)
+        # pushSpacerItem = QtWidgets.QSpacerItem(20, 40, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Expanding)
+        # self.formLayout.setItem(0, QtWidgets.QFormLayout.FieldRole, pushSpacerItem)
 
         # QGroupBox
         self.groupBox = QtWidgets.QGroupBox()
         self.groupBox.setLayout(self.formLayout)
+        self.groupBox.setAlignment(QtCore.Qt.AlignHCenter | QtCore.Qt.AlignTop)
 
         # QScrollArea
         self.scrollArea = QtWidgets.QScrollArea()

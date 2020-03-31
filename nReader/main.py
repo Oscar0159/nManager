@@ -26,9 +26,13 @@ class MainWindow(QtWidgets.QMainWindow):
         self.download_queue = Queue()
         self.http_url = ''
         self.labelList = []
+        self.piximap = []
+
+        self.scaleFactor = 1.0
 
         # signal connect
         self.ui.NumLineEdit.returnPressed.connect(self.startDisplay)
+        self.ui.downloadButton.clicked.connect(self.zoomOut)
 
     # def paintEvent(self, QPaintEvent):
     #     #print('paintEvent')
@@ -43,6 +47,38 @@ class MainWindow(QtWidgets.QMainWindow):
     #         print(self.ui.scrollArea.size())
     #         #QtWidgets.QLabel.resize(self.scrollArea.size())
     #         i.resize(self.ui.scrollArea.size())
+
+    def zoomOut(self):
+        self.scaleImage(0.8)
+
+
+    def scaleImage(self, factor):
+        self.scaleFactor *= factor
+        for i in range(int(self.page_num)):
+            # print(type(i.size()))
+            print(self.piximap[i].size())
+            self.labelList[i].setPixmap(self.piximap[i].scaled(200, 600, Qt.KeepAspectRatio))
+            # i.resize(self.scaleFactor * i.pixmap().size())
+            # i.setAlignment(QtCore.Qt.AlignCenter)
+
+        #self.ui.groupBox.setGeometry(0, 0, self.ui.groupBox.geometry().width(), self.ui.groupBox.geometry().height() * self.scaleFactor)
+
+
+        self.adjustScrollBar(self.ui.scrollArea.horizontalScrollBar(), factor)
+        self.adjustScrollBar(self.ui.scrollArea.verticalScrollBar(), factor)
+
+
+        self.ui.groupBox.updateGeometry()
+        #print(1 * 0.8)
+        #print(self.ui.groupBox.geometry())
+        # print(self.ui.groupBox.geometry().width())
+        # print(self.ui.groupBox.geometry().height())
+
+
+
+    def adjustScrollBar(self, scrollBar, factor):
+        scrollBar.setValue(int(factor * scrollBar.value()
+                               + ((factor - 1) * scrollBar.pageStep() / 2)))
 
     def startDisplay(self):
         self.num = self.ui.NumLineEdit.text()  # 取得編號
@@ -70,9 +106,15 @@ class MainWindow(QtWidgets.QMainWindow):
 
     def putImgInLayout(self):
         for i in range(int(self.page_num)):
+            self.piximap.append(QtGui.QPixmap())
             self.labelList.append(QtWidgets.QLabel())
+            self.labelList[i].setScaledContents(True)
+            sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Fixed, QtWidgets.QSizePolicy.Fixed)
+            sizePolicy.setHorizontalStretch(0)
+            sizePolicy.setVerticalStretch(0)
+            sizePolicy.setHeightForWidth(self.labelList[i].sizePolicy().hasHeightForWidth())
+            self.labelList[i].setSizePolicy(sizePolicy)
             self.labelList[i].setAlignment(QtCore.Qt.AlignCenter)
-            #self.labelList[i].setScaledContents(True)
             self.ui.formLayout.insertRow(i, self.labelList[i])
 
         for i in range(self._thread_num):
@@ -86,9 +128,16 @@ class MainWindow(QtWidgets.QMainWindow):
             substr = img_url.split('/')[-1].split('.')
             img_index = int(substr[0])
             img_data = requests.get(img_url)
-            piximap = QtGui.QPixmap()
-            piximap.loadFromData(img_data.content)
-            self.labelList[img_index - 1].setPixmap(piximap)
+            self.piximap[img_index - 1].loadFromData(img_data.content)
+            self.labelList[img_index - 1].setPixmap(self.piximap[img_index - 1])
+        # while not self.download_queue.empty():
+        #     img_url = self.download_queue.get()
+        #     substr = img_url.split('/')[-1].split('.')
+        #     img_index = int(substr[0])
+        #     img_data = requests.get(img_url)
+        #     piximap = QtGui.QPixmap()
+        #     piximap.loadFromData(img_data.content)
+        #     self.labelList[img_index - 1].setPixmap(piximap)
 
     def msg(self):
         QtWidgets.QMessageBox.information(self, 'title', 'msg', QtWidgets.QMessageBox.Yes)

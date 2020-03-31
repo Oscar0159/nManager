@@ -810,9 +810,9 @@ https://doc.qt.io/qt-5/stylesheet-examples.html#customizing-qframe
 
 --------------------------------------------------------------------------- */
 QLabel {
-  background-color: #19232D;
-  border: 0px solid #32414B;
-  padding: 2px;
+  /* background-color: #19232D; */
+  border: 1px solid #32414B;
+  padding: 5px;
   margin: 0px;
   color: #F0F0F0;
 }
