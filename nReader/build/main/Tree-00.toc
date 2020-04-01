@@ -1,6 +1,6 @@
 ('C:\\Users\\ArcHer_Wn\\Documents\\GitHub\\nManager\\nReader\\build\\main\\setuptools-40.8.0-py3.7.egg',
  None,
- {'*.pyd', '*.cp37-win_amd64.pyd', 'EGG-INFO', '*.py', '*.pyw', '*.pyc'},
+ {'*.pyd', 'EGG-INFO', '*.py', '*.pyw', '*.cp37-win_amd64.pyd', '*.pyc'},
  'DATA',
  [('setuptools\\cli-32.exe',
    'C:\\Users\\ArcHer_Wn\\Documents\\GitHub\\nManager\\nReader\\build\\main\\setuptools-40.8.0-py3.7.egg\\setuptools\\cli-32.exe',

@@ -51,38 +51,6 @@
    'C:\\Program Files (x86)\\Microsoft Visual '
    'Studio\\Shared\\Python37_64\\lib\\selectors.py',
    'PYMODULE'),
-  ('os',
-   'C:\\Program Files (x86)\\Microsoft Visual '
-   'Studio\\Shared\\Python37_64\\lib\\os.py',
-   'PYMODULE'),
-  ('subprocess',
-   'C:\\Program Files (x86)\\Microsoft Visual '
-   'Studio\\Shared\\Python37_64\\lib\\subprocess.py',
-   'PYMODULE'),
-  ('signal',
-   'C:\\Program Files (x86)\\Microsoft Visual '
-   'Studio\\Shared\\Python37_64\\lib\\signal.py',
-   'PYMODULE'),
-  ('ntpath',
-   'C:\\Program Files (x86)\\Microsoft Visual '
-   'Studio\\Shared\\Python37_64\\lib\\ntpath.py',
-   'PYMODULE'),
-  ('string',
-   'C:\\Program Files (x86)\\Microsoft Visual '
-   'Studio\\Shared\\Python37_64\\lib\\string.py',
-   'PYMODULE'),
-  ('genericpath',
-   'C:\\Program Files (x86)\\Microsoft Visual '
-   'Studio\\Shared\\Python37_64\\lib\\genericpath.py',
-   'PYMODULE'),
-  ('posixpath',
-   'C:\\Program Files (x86)\\Microsoft Visual '
-   'Studio\\Shared\\Python37_64\\lib\\posixpath.py',
-   'PYMODULE'),
-  ('stat',
-   'C:\\Program Files (x86)\\Microsoft Visual '
-   'Studio\\Shared\\Python37_64\\lib\\stat.py',
-   'PYMODULE'),
   ('multiprocessing.popen_fork',
    'C:\\Program Files (x86)\\Microsoft Visual '
    'Studio\\Shared\\Python37_64\\lib\\multiprocessing\\popen_fork.py',
@@ -159,6 +127,10 @@
    'C:\\Program Files (x86)\\Microsoft Visual '
    'Studio\\Shared\\Python37_64\\lib\\netrc.py',
    'PYMODULE'),
+  ('stat',
+   'C:\\Program Files (x86)\\Microsoft Visual '
+   'Studio\\Shared\\Python37_64\\lib\\stat.py',
+   'PYMODULE'),
   ('shlex',
    'C:\\Program Files (x86)\\Microsoft Visual '
    'Studio\\Shared\\Python37_64\\lib\\shlex.py',
@@ -230,6 +202,14 @@
   ('unittest',
    'C:\\Program Files (x86)\\Microsoft Visual '
    'Studio\\Shared\\Python37_64\\lib\\unittest\\__init__.py',
+   'PYMODULE'),
+  ('ntpath',
+   'C:\\Program Files (x86)\\Microsoft Visual '
+   'Studio\\Shared\\Python37_64\\lib\\ntpath.py',
+   'PYMODULE'),
+  ('genericpath',
+   'C:\\Program Files (x86)\\Microsoft Visual '
+   'Studio\\Shared\\Python37_64\\lib\\genericpath.py',
    'PYMODULE'),
   ('unittest.signals',
    'C:\\Program Files (x86)\\Microsoft Visual '
@@ -487,6 +467,14 @@
    'C:\\Program Files (x86)\\Microsoft Visual '
    'Studio\\Shared\\Python37_64\\lib\\contextlib.py',
    'PYMODULE'),
+  ('string',
+   'C:\\Program Files (x86)\\Microsoft Visual '
+   'Studio\\Shared\\Python37_64\\lib\\string.py',
+   'PYMODULE'),
+  ('posixpath',
+   'C:\\Program Files (x86)\\Microsoft Visual '
+   'Studio\\Shared\\Python37_64\\lib\\posixpath.py',
+   'PYMODULE'),
   ('hashlib',
    'C:\\Program Files (x86)\\Microsoft Visual '
    'Studio\\Shared\\Python37_64\\lib\\hashlib.py',
@@ -623,9 +611,17 @@
    'C:\\Program Files (x86)\\Microsoft Visual '
    'Studio\\Shared\\Python37_64\\lib\\multiprocessing\\util.py',
    'PYMODULE'),
+  ('signal',
+   'C:\\Program Files (x86)\\Microsoft Visual '
+   'Studio\\Shared\\Python37_64\\lib\\signal.py',
+   'PYMODULE'),
   ('multiprocessing.popen_spawn_win32',
    'C:\\Program Files (x86)\\Microsoft Visual '
    'Studio\\Shared\\Python37_64\\lib\\multiprocessing\\popen_spawn_win32.py',
+   'PYMODULE'),
+  ('subprocess',
+   'C:\\Program Files (x86)\\Microsoft Visual '
+   'Studio\\Shared\\Python37_64\\lib\\subprocess.py',
    'PYMODULE'),
   ('multiprocessing.spawn',
    'C:\\Program Files (x86)\\Microsoft Visual '
@@ -638,20 +634,20 @@
   ('pkg_resources',
    'c:\\users\\archer_wn\\desktop\\mycase\\automangatranslate\\venv\\lib\\site-packages\\setuptools-40.8.0-py3.7.egg\\pkg_resources\\__init__.py',
    'PYMODULE'),
-  ('pkg_resources._vendor.packaging.version',
-   'c:\\users\\archer_wn\\desktop\\mycase\\automangatranslate\\venv\\lib\\site-packages\\setuptools-40.8.0-py3.7.egg\\pkg_resources\\_vendor\\packaging\\version.py',
+  ('pkg_resources._vendor.packaging._compat',
+   'c:\\users\\archer_wn\\desktop\\mycase\\automangatranslate\\venv\\lib\\site-packages\\setuptools-40.8.0-py3.7.egg\\pkg_resources\\_vendor\\packaging\\_compat.py',
+   'PYMODULE'),
+  ('pkg_resources._vendor.appdirs',
+   'c:\\users\\archer_wn\\desktop\\mycase\\automangatranslate\\venv\\lib\\site-packages\\setuptools-40.8.0-py3.7.egg\\pkg_resources\\_vendor\\appdirs.py',
    'PYMODULE'),
   ('pkg_resources._vendor',
    'c:\\users\\archer_wn\\desktop\\mycase\\automangatranslate\\venv\\lib\\site-packages\\setuptools-40.8.0-py3.7.egg\\pkg_resources\\_vendor\\__init__.py',
    'PYMODULE'),
-  ('pkg_resources._vendor.packaging.__about__',
-   'c:\\users\\archer_wn\\desktop\\mycase\\automangatranslate\\venv\\lib\\site-packages\\setuptools-40.8.0-py3.7.egg\\pkg_resources\\_vendor\\packaging\\__about__.py',
+  ('pkg_resources._vendor.packaging.version',
+   'c:\\users\\archer_wn\\desktop\\mycase\\automangatranslate\\venv\\lib\\site-packages\\setuptools-40.8.0-py3.7.egg\\pkg_resources\\_vendor\\packaging\\version.py',
    'PYMODULE'),
-  ('pkg_resources._vendor.packaging',
-   'c:\\users\\archer_wn\\desktop\\mycase\\automangatranslate\\venv\\lib\\site-packages\\setuptools-40.8.0-py3.7.egg\\pkg_resources\\_vendor\\packaging\\__init__.py',
-   'PYMODULE'),
-  ('pkg_resources._vendor.six',
-   'c:\\users\\archer_wn\\desktop\\mycase\\automangatranslate\\venv\\lib\\site-packages\\setuptools-40.8.0-py3.7.egg\\pkg_resources\\_vendor\\six.py',
+  ('pkg_resources._vendor.packaging.utils',
+   'c:\\users\\archer_wn\\desktop\\mycase\\automangatranslate\\venv\\lib\\site-packages\\setuptools-40.8.0-py3.7.egg\\pkg_resources\\_vendor\\packaging\\utils.py',
    'PYMODULE'),
   ('pkg_resources._vendor.pyparsing',
    'c:\\users\\archer_wn\\desktop\\mycase\\automangatranslate\\venv\\lib\\site-packages\\setuptools-40.8.0-py3.7.egg\\pkg_resources\\_vendor\\pyparsing.py',
@@ -687,23 +683,23 @@
   ('pkg_resources._vendor.packaging._structures',
    'c:\\users\\archer_wn\\desktop\\mycase\\automangatranslate\\venv\\lib\\site-packages\\setuptools-40.8.0-py3.7.egg\\pkg_resources\\_vendor\\packaging\\_structures.py',
    'PYMODULE'),
-  ('pkg_resources._vendor.packaging.utils',
-   'c:\\users\\archer_wn\\desktop\\mycase\\automangatranslate\\venv\\lib\\site-packages\\setuptools-40.8.0-py3.7.egg\\pkg_resources\\_vendor\\packaging\\utils.py',
+  ('pkg_resources._vendor.packaging',
+   'c:\\users\\archer_wn\\desktop\\mycase\\automangatranslate\\venv\\lib\\site-packages\\setuptools-40.8.0-py3.7.egg\\pkg_resources\\_vendor\\packaging\\__init__.py',
    'PYMODULE'),
-  ('pkg_resources._vendor.packaging.markers',
-   'c:\\users\\archer_wn\\desktop\\mycase\\automangatranslate\\venv\\lib\\site-packages\\setuptools-40.8.0-py3.7.egg\\pkg_resources\\_vendor\\packaging\\markers.py',
-   'PYMODULE'),
-  ('pkg_resources._vendor.appdirs',
-   'c:\\users\\archer_wn\\desktop\\mycase\\automangatranslate\\venv\\lib\\site-packages\\setuptools-40.8.0-py3.7.egg\\pkg_resources\\_vendor\\appdirs.py',
-   'PYMODULE'),
-  ('pkg_resources._vendor.packaging.requirements',
-   'c:\\users\\archer_wn\\desktop\\mycase\\automangatranslate\\venv\\lib\\site-packages\\setuptools-40.8.0-py3.7.egg\\pkg_resources\\_vendor\\packaging\\requirements.py',
+  ('pkg_resources._vendor.packaging.__about__',
+   'c:\\users\\archer_wn\\desktop\\mycase\\automangatranslate\\venv\\lib\\site-packages\\setuptools-40.8.0-py3.7.egg\\pkg_resources\\_vendor\\packaging\\__about__.py',
    'PYMODULE'),
   ('pkg_resources._vendor.packaging.specifiers',
    'c:\\users\\archer_wn\\desktop\\mycase\\automangatranslate\\venv\\lib\\site-packages\\setuptools-40.8.0-py3.7.egg\\pkg_resources\\_vendor\\packaging\\specifiers.py',
    'PYMODULE'),
-  ('pkg_resources._vendor.packaging._compat',
-   'c:\\users\\archer_wn\\desktop\\mycase\\automangatranslate\\venv\\lib\\site-packages\\setuptools-40.8.0-py3.7.egg\\pkg_resources\\_vendor\\packaging\\_compat.py',
+  ('pkg_resources._vendor.packaging.markers',
+   'c:\\users\\archer_wn\\desktop\\mycase\\automangatranslate\\venv\\lib\\site-packages\\setuptools-40.8.0-py3.7.egg\\pkg_resources\\_vendor\\packaging\\markers.py',
+   'PYMODULE'),
+  ('pkg_resources._vendor.six',
+   'c:\\users\\archer_wn\\desktop\\mycase\\automangatranslate\\venv\\lib\\site-packages\\setuptools-40.8.0-py3.7.egg\\pkg_resources\\_vendor\\six.py',
+   'PYMODULE'),
+  ('pkg_resources._vendor.packaging.requirements',
+   'c:\\users\\archer_wn\\desktop\\mycase\\automangatranslate\\venv\\lib\\site-packages\\setuptools-40.8.0-py3.7.egg\\pkg_resources\\_vendor\\packaging\\requirements.py',
    'PYMODULE'),
   ('sysconfig',
    'C:\\Program Files (x86)\\Microsoft Visual '
@@ -747,17 +743,24 @@
    'C:\\Program Files (x86)\\Microsoft Visual '
    'Studio\\Shared\\Python37_64\\lib\\typing.py',
    'PYMODULE'),
-  ('tracemalloc',
+  ('_py_abc',
    'C:\\Program Files (x86)\\Microsoft Visual '
-   'Studio\\Shared\\Python37_64\\lib\\tracemalloc.py',
+   'Studio\\Shared\\Python37_64\\lib\\_py_abc.py',
    'PYMODULE'),
   ('stringprep',
    'C:\\Program Files (x86)\\Microsoft Visual '
    'Studio\\Shared\\Python37_64\\lib\\stringprep.py',
    'PYMODULE'),
-  ('_py_abc',
+  ('tracemalloc',
    'C:\\Program Files (x86)\\Microsoft Visual '
-   'Studio\\Shared\\Python37_64\\lib\\_py_abc.py',
+   'Studio\\Shared\\Python37_64\\lib\\tracemalloc.py',
+   'PYMODULE'),
+  ('ui.mainUi',
+   'C:\\Users\\ArcHer_Wn\\Documents\\GitHub\\nManager\\nReader\\ui\\mainUi.py',
+   'PYMODULE'),
+  ('ui', '-', 'PYMODULE'),
+  ('PyQt5',
+   'c:\\users\\archer_wn\\desktop\\mycase\\automangatranslate\\venv\\lib\\site-packages\\PyQt5\\__init__.py',
    'PYMODULE'),
   ('requests_html',
    'c:\\users\\archer_wn\\desktop\\mycase\\automangatranslate\\venv\\lib\\site-packages\\requests_html.py',
@@ -1392,12 +1395,13 @@
    'C:\\Program Files (x86)\\Microsoft Visual '
    'Studio\\Shared\\Python37_64\\lib\\asyncio\\constants.py',
    'PYMODULE'),
-  ('queue',
+  ('threading',
    'C:\\Program Files (x86)\\Microsoft Visual '
-   'Studio\\Shared\\Python37_64\\lib\\queue.py',
+   'Studio\\Shared\\Python37_64\\lib\\threading.py',
    'PYMODULE'),
-  ('PyQt5',
-   'c:\\users\\archer_wn\\desktop\\mycase\\automangatranslate\\venv\\lib\\site-packages\\PyQt5\\__init__.py',
+  ('_threading_local',
+   'C:\\Program Files (x86)\\Microsoft Visual '
+   'Studio\\Shared\\Python37_64\\lib\\_threading_local.py',
    'PYMODULE'),
   ('requests',
    'c:\\users\\archer_wn\\desktop\\mycase\\automangatranslate\\venv\\lib\\site-packages\\requests\\__init__.py',
@@ -1498,13 +1502,13 @@
   ('requests.__version__',
    'c:\\users\\archer_wn\\desktop\\mycase\\automangatranslate\\venv\\lib\\site-packages\\requests\\__version__.py',
    'PYMODULE'),
-  ('threading',
+  ('queue',
    'C:\\Program Files (x86)\\Microsoft Visual '
-   'Studio\\Shared\\Python37_64\\lib\\threading.py',
+   'Studio\\Shared\\Python37_64\\lib\\queue.py',
    'PYMODULE'),
-  ('_threading_local',
+  ('os',
    'C:\\Program Files (x86)\\Microsoft Visual '
-   'Studio\\Shared\\Python37_64\\lib\\_threading_local.py',
+   'Studio\\Shared\\Python37_64\\lib\\os.py',
    'PYMODULE'),
   ('setuptools\\cli-32.exe',
    'C:\\Users\\ArcHer_Wn\\Documents\\GitHub\\nManager\\nReader\\build\\main\\setuptools-40.8.0-py3.7.egg\\setuptools\\cli-32.exe',
