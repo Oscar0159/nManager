@@ -23,7 +23,7 @@ class MainWindow(QtWidgets.QMainWindow):
         self.createActions()
 
         self._save_dir = os.getcwd() + os.sep + 'download'
-        self._thread_num = 10
+        self._thread_num = 5
         self._serial_num = ''
         self.gallery_id = ''
         self.page_num = '0'
@@ -65,7 +65,7 @@ class MainWindow(QtWidgets.QMainWindow):
 
     def _scaleImage(self, factor):
         self.scaleFactor += factor
-        print(self.scaleFactor)
+        print(f'factor:{self.scaleFactor}')
         for i in range(int(self.page_num)):
             # t = Thread(target=self.scale, args=(i,))
             # t.start()
@@ -73,7 +73,7 @@ class MainWindow(QtWidgets.QMainWindow):
                 w = self.pixmap_list[i].width() * self.scaleFactor
                 h = self.pixmap_list[i].height() * self.scaleFactor
                 self.label_list[i].setPixmap(self.pixmap_list[i].scaled(w, h, Qt.KeepAspectRatio))
-        self.adjustScrollBar(self.ui.scrollArea.horizontalScrollBar(), factor)
+        # self.adjustScrollBar(self.ui.scrollArea.horizontalScrollBar(), factor)
         self.adjustScrollBar(self.ui.scrollArea.verticalScrollBar(), factor)
     #
     # def adjustScrollBar(self, scrollBar, factor):
@@ -86,10 +86,10 @@ class MainWindow(QtWidgets.QMainWindow):
             print(self.ui.formLayout.geometry())
 
     def adjustScrollBar(self, scrollBar, factor):
-        print(scrollBar.value())
-        print(f'pageStep: {scrollBar.pageStep()}')
-        scrollBar.setValue(int(scrollBar.value() + (self.scaleFactor - 1) * scrollBar.pageStep() / 2))
-        print(f'after: {scrollBar.value()}')
+        print(f'滾輪位置:{scrollBar.value()}')
+        print(f'滾窗大小: {scrollBar.pageStep()}')
+        scrollBar.setValue(int(scrollBar.value() + ((scrollBar.value() + (scrollBar.pageStep() / 2)) / ((self.scaleFactor -1) * 10 + (10 - 10 * factor)) * factor * 10)))
+        print(f'after滾輪位置: {scrollBar.value()}')
 
     def startDisplay(self):
         self._serial_num = self.ui.NumLineEdit.text()
