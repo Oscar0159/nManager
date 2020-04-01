@@ -1,20 +1,8 @@
 # -*- coding: utf-8 -*-
-import os
-
 from PyQt5 import QtCore, QtGui, QtWidgets
-from PyQt5.QtGui import QIntValidator
-from PyQt5.QtGui import QIntValidator
-from PyQt5.QtCore import Qt
-import time
-from threading import Thread
-import requests
-from requests_html import HTMLSession
-import sys
-from queue import Queue
 
 
-
-class Ui_MainWindow(object):
+class UiMainWindow(object):
     def setupUi(self, MainWindow):
         # style
         with open('./ui/style.qss') as file:
@@ -34,14 +22,14 @@ class Ui_MainWindow(object):
         # QLineEdit
         self.NumLineEdit = QtWidgets.QLineEdit()
         self.NumLineEdit.setObjectName('NumLineEdit')
-        self.NumLineEdit.setValidator(QIntValidator(1, 999999))
+        self.NumLineEdit.setValidator(QtGui.QIntValidator(1, 999999))
         self.NumLineEdit.setPlaceholderText('xxxxxx')
         self.NumLineEdit.setGeometry(0, 0, 151, 28)
         self.NumLineEdit.setAlignment(QtCore.Qt.AlignCenter)
 
         # QFormLayout
         self.formLayout = QtWidgets.QFormLayout()
-        # self.formLayout.setLabelAlignment(QtCore.Qt.AlignHCenter | QtCore.Qt.AlignTop)
+        self.formLayout.setLabelAlignment(QtCore.Qt.AlignHCenter | QtCore.Qt.AlignTop)
         self.formLayout.setFormAlignment(QtCore.Qt.AlignHCenter | QtCore.Qt.AlignTop)
         # pushSpacerItem = QtWidgets.QSpacerItem(20, 40, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Expanding)
         # self.formLayout.setItem(0, QtWidgets.QFormLayout.FieldRole, pushSpacerItem)
@@ -69,14 +57,14 @@ class Ui_MainWindow(object):
         self.downloadButton.setSizePolicy(sizePolicy)
         self.downloadButton.setText("")
         icon = QtGui.QIcon()
-        icon.addPixmap(QtGui.QPixmap('./icon/download_light.png'), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        icon.addPixmap(QtGui.QPixmap('./icon/zoom_out.png'), QtGui.QIcon.Normal, QtGui.QIcon.Off)
         self.downloadButton.setIcon(icon)
 
         self.downloadButton_1 = QtWidgets.QPushButton()
         self.downloadButton_1.setSizePolicy(sizePolicy)
         self.downloadButton_1.setText("")
         icon = QtGui.QIcon()
-        icon.addPixmap(QtGui.QPixmap('./icon/download_light.ico'), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        icon.addPixmap(QtGui.QPixmap('./icon/zoom_in.ico'), QtGui.QIcon.Normal, QtGui.QIcon.Off)
         self.downloadButton_1.setIcon(icon)
 
         self.downloadButton_2 = QtWidgets.QPushButton()
