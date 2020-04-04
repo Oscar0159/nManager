@@ -6,6 +6,7 @@ from queue import Queue
 import requests
 from threading import Thread
 
+from PyQt5.QtWinExtras import QtWin
 from requests_html import HTMLSession
 from PyQt5 import QtCore, QtGui, QtWidgets
 from PyQt5.QtCore import Qt
@@ -21,6 +22,8 @@ class MainWindow(QtWidgets.QMainWindow):
         self.ui = UiMainWindow()
         self.ui.setupUi(self)
         self.createActions()
+        self.setContextMenuPolicy(QtCore.Qt.NoContextMenu)
+
 
         self._save_dir = os.getcwd() + os.sep + 'download'
         self._thread_num = 5
@@ -40,19 +43,16 @@ class MainWindow(QtWidgets.QMainWindow):
         self.ui.downloadButton_1.clicked.connect(self.zoomIn)
         self.ui.downloadButton_2.clicked.connect(self.open_dir)
 
-    # def paintEvent(self, QPaintEvent):
-    #     #print('paintEvent')
-    #     pass
-    #
-    # def resizeEvent(self, QResizeEvent):
-    #     print(self.ui.groupBox.size())
-    #     self.resizeImage()
-    #
-    # def resizeImage(self):
-    #     for i in self.labelList:
-    #         print(self.ui.scrollArea.size())
-    #         #QtWidgets.QLabel.resize(self.scrollArea.size())
-    #         i.resize(self.ui.scrollArea.size())
+    def setAero(self, Qwin):
+        if Qwin.isCompositionEnabled():
+            Qwin.extendFrameIntoClientArea(-1, -1, -1, -1)
+            Qwin.setAttribute(Qt.WA_TranslucentBackground, True)
+            Qwin.setAttribute(Qt.WA_NoSystemBackground, False)
+            Qwin.setStyleSheet("widget { background: transparent; }")
+        else:
+            QtWin.resetExtendedFrame(self)
+            Qwin.setAttribute(Qt.WA_TranslucentBackground, False)
+            #Qwin.setStyleSheet(QString("widget { background: %1; }").arg(QtWin::realColorizationColor().name()))
 
     def zoomOut(self):
         self._scaleImage(-0.1)
@@ -65,7 +65,7 @@ class MainWindow(QtWidgets.QMainWindow):
 
     def _scaleImage(self, factor):
         self.scaleFactor += factor
-        print(f'factor:{self.scaleFactor}')
+        # print(f'factor:{self.scaleFactor}')
         for i in range(int(self.page_num)):
             # t = Thread(target=self.scale, args=(i,))
             # t.start()
@@ -86,10 +86,10 @@ class MainWindow(QtWidgets.QMainWindow):
             print(self.ui.formLayout.geometry())
 
     def adjustScrollBar(self, scrollBar, factor):
-        print(f'滾輪位置:{scrollBar.value()}')
-        print(f'滾窗大小: {scrollBar.pageStep()}')
+        # print(f'滾輪位置:{scrollBar.value()}')
+        # print(f'滾窗大小: {scrollBar.pageStep()}')
         scrollBar.setValue(int(scrollBar.value() + ((scrollBar.value() + (scrollBar.pageStep() / 2)) / ((self.scaleFactor -1) * 10 + (10 - 10 * factor)) * factor * 10)))
-        print(f'after滾輪位置: {scrollBar.value()}')
+        # print(f'after滾輪位置: {scrollBar.value()}')
 
     def startDisplay(self):
         self._serial_num = self.ui.NumLineEdit.text()
@@ -150,6 +150,12 @@ class MainWindow(QtWidgets.QMainWindow):
 
     def msg(self):
         QtWidgets.QMessageBox.information(self, 'title', 'msg', QtWidgets.QMessageBox.Yes)
+
+    def clearWindow(self):
+        self.label_list.clear()
+        self.pixmap_list.clear()
+        for i in range(self.ui.formLayout.count()):
+            self.ui.formLayout.itemAt(i).widget().close()
 
     def open_dir(self):
         path = os.getcwd()

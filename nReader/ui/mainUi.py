@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 from PyQt5 import QtCore, QtGui, QtWidgets
+from PyQt5.QtWinExtras import QtWin
 
 
 class UiMainWindow(object):
@@ -16,6 +17,8 @@ class UiMainWindow(object):
         MainWindow.setMinimumWidth(400)
         MainWindow.setMinimumHeight(600)
         MainWindow.resize(600, 900)
+
+
         MainWindow.setWindowOpacity(0.95)
         #MainWindow.setWindowFlags(Qt.FramelessWindowHint)
 
