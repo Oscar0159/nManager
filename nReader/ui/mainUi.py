@@ -5,12 +5,6 @@ from PyQt5.QtWinExtras import QtWin
 
 class UiMainWindow(object):
     def setupUi(self, MainWindow):
-        # style
-        with open('./ui/style.qss') as file:
-            s = file.readline()
-            #s = ''.join(s).strip('\n')
-        MainWindow.setStyleSheet(s)
-
         # main window
         MainWindow.setObjectName("MainWindow")
         MainWindow.setWindowTitle('nReader')

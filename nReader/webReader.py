@@ -46,6 +46,19 @@ class MainWindow(QtWidgets.QMainWindow):
         self.ui.downloadButton_1.clicked.connect(self.zoomIn)
         self.ui.downloadButton_2.clicked.connect(self.open_dir)
 
+
+    # def keyPressEvent(self, a0: QtGui.QKeyEvent) -> None:
+    #     # print(f'{a0.key()}')
+    #     print('key')
+    #
+    # def mousePressEvent(self, a0: QtGui.QMouseEvent) -> None:
+    #     # print(f'{a0.type()}')
+    #     print('mouse')
+    #
+    # def wheelEvent(self, a0: QtGui.QWheelEvent) -> None:
+    #     # print(f'{a0.type()}')
+    #     print('wheel')
+
     def zoomOut(self):
         self._scaleImage(-0.1)
 
@@ -65,7 +78,7 @@ class MainWindow(QtWidgets.QMainWindow):
                 w = self.pixmap_list[i].width() * self.scaleFactor
                 h = self.pixmap_list[i].height() * self.scaleFactor
                 self.label_list[i].setPixmap(self.pixmap_list[i].scaled(w, h, Qt.KeepAspectRatio))
-        # self.adjustScrollBar(self.ui.scrollArea.horizontalScrollBar(), factor)
+        self.adjustScrollBar(self.ui.scrollArea.horizontalScrollBar(), factor)
         self.adjustScrollBar(self.ui.scrollArea.verticalScrollBar(), factor)
 
     def scale(self, i):
@@ -74,10 +87,7 @@ class MainWindow(QtWidgets.QMainWindow):
             print(self.ui.formLayout.geometry())
 
     def adjustScrollBar(self, scrollBar, factor):
-        # print(f'滾輪位置:{scrollBar.value()}')
-        # print(f'滾窗大小: {scrollBar.pageStep()}')
         scrollBar.setValue(int(scrollBar.value() + ((scrollBar.value() + (scrollBar.pageStep() / 2)) / ((self.scaleFactor -1) * 10 + (10 - 10 * factor)) * factor * 10)))
-        # print(f'after滾輪位置: {scrollBar.value()}')
 
     def loadNhentai(self):
         self.http_url = NHENTAI
@@ -90,13 +100,16 @@ class MainWindow(QtWidgets.QMainWindow):
             self.download_queue.put(image_url, block=False)
 
     def addPreviewImage(self):
-        for i in range(int(self.page_num)-23):
+        for i in range(int(self.page_num)):
             self.pixmap_list.append(QtGui.QPixmap())
             self.label_list.append(QtWidgets.QLabel())
             sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Fixed, QtWidgets.QSizePolicy.Fixed)
             self.label_list[i].setSizePolicy(sizePolicy)
             self.label_list[i].setAlignment(QtCore.Qt.AlignCenter)
-            self.ui.formLayout.setWidget(1, QtWidgets.QFormLayout.FieldRole, self.label_list[i])
+            self.label_list[i].setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
+            #self.ui.formLayout.addRow()
+            self.ui.formLayout.addWidget(self.label_list[i])
+            # self.ui.formLayout.setWidget(0, QtWidgets.QFormLayout.LabelRole, self.label_list[i])
 
     def loadPreviewImage(self):
         for i in range(int(self.page_num)):
@@ -105,9 +118,8 @@ class MainWindow(QtWidgets.QMainWindow):
             self.pixmap_list[i].loadFromData(img_data.content)
             if not self.pixmap_list[i].isNull():
                 w = 250
-                h = 360
-                self.label_list[i].setPixmap(
-                    self.pixmap_list[i].scaled(w, h, Qt.KeepAspectRatio))
+                self.label_list[i].setPixmap(self.pixmap_list[i].scaledToWidth(w))
+                self.label_list[i].setStyleSheet('background-color: #1d1f21')
 
 
     def startDisplay(self):
@@ -148,7 +160,7 @@ class MainWindow(QtWidgets.QMainWindow):
             self.label_list[i].setSizePolicy(sizePolicy)
             self.label_list[i].setAlignment(QtCore.Qt.AlignCenter)
             # self.ui.formLayout.insertRow(i, self.label_list[i])
-            self.ui.formLayout.setWidget(i, QtWidgets.QFormLayout.FieldRole, self.label_list[i])
+            self.ui.formLayout.setWidget(0, QtWidgets.QFormLayout.FieldRole, self.label_list[i])
 
     def _loadImg(self):
         while not self.download_queue.empty():
@@ -204,4 +216,6 @@ if __name__ == "__main__":
         app.setStyleSheet(file.read())
 
     widget.show()
+
+    widget.grabKeyboard()
     sys.exit(app.exec_())

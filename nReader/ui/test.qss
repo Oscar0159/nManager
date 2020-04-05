@@ -1,4 +1,5 @@
 QWidget {
+  /* background-color: #fff; */
   background-color: #19232D;
   border: 0px solid #32414B;
   padding: 0px;
@@ -809,6 +810,10 @@ QAbstractSpinBox:selected {
 https://doc.qt.io/qt-5/stylesheet-examples.html#customizing-qframe
 
 --------------------------------------------------------------------------- */
+ImageWidget {
+  background-color: #000;
+}
+
 QLabel {
   /* background-color: #563251; */
   border: 1px solid #32414B;

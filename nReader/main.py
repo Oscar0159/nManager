@@ -21,8 +21,6 @@ class MainWindow(QtWidgets.QMainWindow):
         super(MainWindow, self).__init__()
         self.ui = UiMainWindow()
         self.ui.setupUi(self)
-        self.createActions()
-        self.setContextMenuPolicy(QtCore.Qt.NoContextMenu)
 
 
         self._save_dir = os.getcwd() + os.sep + 'download'
@@ -73,7 +71,7 @@ class MainWindow(QtWidgets.QMainWindow):
                 w = self.pixmap_list[i].width() * self.scaleFactor
                 h = self.pixmap_list[i].height() * self.scaleFactor
                 self.label_list[i].setPixmap(self.pixmap_list[i].scaled(w, h, Qt.KeepAspectRatio))
-        # self.adjustScrollBar(self.ui.scrollArea.horizontalScrollBar(), factor)
+        self.adjustScrollBar(self.ui.scrollArea.horizontalScrollBar(), factor)
         self.adjustScrollBar(self.ui.scrollArea.verticalScrollBar(), factor)
     #
     # def adjustScrollBar(self, scrollBar, factor):
@@ -142,12 +140,6 @@ class MainWindow(QtWidgets.QMainWindow):
                 h = self.pixmap_list[img_index-1].height() * self.scaleFactor
                 self.label_list[img_index-1].setPixmap(self.pixmap_list[img_index-1].scaled(w, h, Qt.KeepAspectRatio))
 
-    def createActions(self):
-        self.zoomInAct = QtWidgets.QAction("Zoom &In (25%)", self, shortcut="Ctrl++", enabled=True, triggered=self.zoomIn)
-        self.zoomOutAct = QtWidgets.QAction("Zoom &Out (25%)", self, shortcut="Ctrl+-", enabled=True, triggered=self.zoomOut)
-        self.resetSizeAct = QtWidgets.QAction("&Normal Size", self, shortcut="Ctrl+S", enabled=True, triggered=self.resetSize)
-        #self.fitToWindowAct = QtWidgets.QAction("&Fit to Window", self, enabled=False, checkable=True, shortcut="Ctrl+F", triggered=self.fitToWindow)
-
     def msg(self):
         QtWidgets.QMessageBox.information(self, 'title', 'msg', QtWidgets.QMessageBox.Yes)
 
@@ -160,22 +152,6 @@ class MainWindow(QtWidgets.QMainWindow):
     def open_dir(self):
         path = os.getcwd()
         os.system(f'explorer.exe {path}')
-
-    def _createFolder(self):
-        try:
-            if (not os.path.exists(self._save_dir)):  # 建立下載目錄
-                os.mkdir(self._save_dir)
-
-            if (os.path.exists(self._save_dir)):  # 下載目錄存在
-                self._save_path = self._save_dir + os.sep + str(self._serial_num)
-                if (not os.path.exists(self._save_path)):  # 建立下載目標資料夾
-                    os.mkdir(self._save_path)
-                else:  # 下載目標資料夾存在 -> 下載缺少的圖片
-                    pass
-        except Exception as e:
-            print(f'創建資料夾錯誤 : {e}')
-        else:
-            print(f'創建資料夾 : {self._serial_num}  位置:{self._save_path}')
 
 
 if __name__ == "__main__":
