@@ -1,4 +1,6 @@
 # -*- coding: utf-8 -*-
+import requests
+
 from PyQt5 import QtCore, QtGui, QtWidgets
 from PyQt5.QtCore import QPoint, QRect, QSize, Qt
 from PyQt5.QtWidgets import (QApplication, QLayout, QPushButton, QSizePolicy,
@@ -47,6 +49,7 @@ class UiMainWindow(object):
 
         # QGroupBox
         self.groupBox = QtWidgets.QGroupBox()
+        self.groupBox.setStyleSheet('background-color: #263e52')
         self.groupBox.setLayout(self.formLayout)
         self.groupBox.setAlignment(QtCore.Qt.AlignHCenter | QtCore.Qt.AlignTop)
 
@@ -100,10 +103,35 @@ class UiMainWindow(object):
         #self.hLayout.setStretch(4, )
         #self.hLayout.setStretch(5, 1)
 
+        # page index in QHBoxLayout
+        self.pageIndexLayout = QtWidgets.QHBoxLayout()
+        self.indexButton = []
+        for i in range(7):
+            self.indexButton.append(QtWidgets.QPushButton(f'{i+1}'))
+            self.pageIndexLayout.addWidget(self.indexButton[i])
+
+        # page button in QHBoxLayout
+        self.pageButtonLayout = QtWidgets.QHBoxLayout()
+        self.firstButton = QtWidgets.QPushButton(icon=QtGui.QIcon(QtGui.QPixmap('./icon/doubleLeft_light.png')))
+        self.previousButton = QtWidgets.QPushButton(icon=QtGui.QIcon(QtGui.QPixmap('./icon/left_light.png')))
+        self.nextButton = QtWidgets.QPushButton(icon=QtGui.QIcon(QtGui.QPixmap('./icon/right_light.png')))
+        self.lastButton = QtWidgets.QPushButton(icon=QtGui.QIcon(QtGui.QPixmap('./icon/doubleRight_light.png')))
+        self.pageButtonLayout.addWidget(self.firstButton)
+        self.pageButtonLayout.addWidget(self.previousButton)
+        self.pageButtonLayout.addLayout(self.pageIndexLayout)
+        self.pageButtonLayout.addWidget(self.nextButton)
+        self.pageButtonLayout.addWidget(self.lastButton)
+        self.pageButtonLayout.setStretch(0, 1)
+        self.pageButtonLayout.setStretch(1, 2)
+        self.pageButtonLayout.setStretch(2, 10)
+        self.pageButtonLayout.setStretch(3, 2)
+        self.pageButtonLayout.setStretch(4, 1)
+
         # QVBoxLayout
         self.vLayout = QtWidgets.QVBoxLayout()
         self.vLayout.addLayout(self.hLayout)
         self.vLayout.addWidget(self.scrollArea)
+        self.vLayout.addLayout(self.pageButtonLayout)
 
         # central widget
         self.centralwidget = QtWidgets.QWidget(MainWindow)
@@ -213,11 +241,61 @@ class FlowLayout(QLayout):
 
         return y + lineHeight - rect.y()
 
-# MainWindow.setLayout(self.layout)
-# QtCore.QMetaObject.connectSlotsByName(MainWindow)
-# MainWindow.setWindowFlags(Qt.FramelessWindowHint | Qt.Tool)
-# MainWindow.setAttribute(Qt.WA_NoSystemBackground, True)
-# MainWindow.setAttribute(Qt.WA_TranslucentBackground, True)
-# MainWindow.resized.connect(self.say)
+class ImageWidget(QtWidgets.QGroupBox):
+    def __init__(self):
+        super(ImageWidget, self).__init__()
+
+        self.setStyleSheet('background-color: #396482;')
+
+        self.verticalLayout = QtWidgets.QVBoxLayout()
+        self.imageLabel = QtWidgets.QLabel()
+        self.imageLabel.setText('ttestt')
+        self.verticalLayout.addWidget(self.imageLabel)
+
+        self.horizontalLayout = QtWidgets.QHBoxLayout()
+
+        # 語言圖示
+        self.languageLabel = QtWidgets.QLabel()
+        self.languageLabel.setStyleSheet('padding: 0px;')
+        pixmap = QtGui.QPixmap('./icon/Japan.png')
+        self.languageLabel.setPixmap(pixmap.scaledToHeight(20))
+        #print(self.languageLabel.size())
+        self.horizontalLayout.addWidget(self.languageLabel)
+
+        # 標題
+        self.captionLabel = QtWidgets.QLabel()
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Ignored, QtWidgets.QSizePolicy.Preferred)
+        #sizePolicy.setHeightForWidth(self.captionLabel.sizePolicy().hasHeightForWidth())
+        self.captionLabel.setSizePolicy(sizePolicy)
+        self.captionLabel.setScaledContents(True)
+        self.captionLabel.setText('Kiritan no Tadashii Shitsuke-kata')
+        self.captionLabel.setAlignment(QtCore.Qt.AlignLeading | QtCore.Qt.AlignLeft | QtCore.Qt.AlignCenter)
+        self.captionLabel.setWordWrap(True)
+        self.horizontalLayout.addWidget(self.captionLabel)
+
+        # 下載按鈕
+        self.downloadButton = QtWidgets.QPushButton()
+        icon = QtGui.QIcon()
+        icon.addPixmap(QtGui.QPixmap('./icon/download_light.png'), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        self.downloadButton.setIcon(icon)
+
+        #print(self.downloadButton.size())
+        self.horizontalLayout.addWidget(self.downloadButton)
+
+        self.horizontalLayout.setStretch(0, 1)
+        self.horizontalLayout.setStretch(1, 20)
+        self.horizontalLayout.setStretch(2, 1)
+
+
+        self.verticalLayout.addLayout(self.horizontalLayout)
+        self.setLayout(self.verticalLayout)
+
+    def setupImage(self, img_url):
+        #img_url = 'https://t.nhentai.net/galleries/1594289/thumb.jpg'
+        img_data = requests.get(img_url)
+        pix = QtGui.QPixmap()
+        pix.loadFromData(img_data.content)
+        w = 250
+        self.imageLabel.setPixmap(pix.scaledToWidth(w))
 
 

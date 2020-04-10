@@ -130,14 +130,15 @@ class FlowLayout(QLayout):
         return y + lineHeight - rect.y()
 
 
-class ImageWidget(QWidget):
+class ImageWidget(QtWidgets.QGroupBox):
     def __init__(self):
         super(ImageWidget, self).__init__()
+
+        self.setStyleSheet('background-color: #404040;')
 
         self.verticalLayout = QtWidgets.QVBoxLayout()
         self.imageLabel = QtWidgets.QLabel()
         self.imageLabel.setText('ttestt')
-        self.imageLabel.setStyleSheet('background-color: #563251;')
         self.verticalLayout.addWidget(self.imageLabel)
 
         self.horizontalLayout = QtWidgets.QHBoxLayout()
@@ -152,12 +153,12 @@ class ImageWidget(QWidget):
 
         # 標題
         self.captionLabel = QtWidgets.QLabel()
-        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Ignored, QtWidgets.QSizePolicy.Ignored)
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Ignored, QtWidgets.QSizePolicy.Preferred)
         #sizePolicy.setHeightForWidth(self.captionLabel.sizePolicy().hasHeightForWidth())
         self.captionLabel.setSizePolicy(sizePolicy)
         self.captionLabel.setScaledContents(True)
-        self.captionLabel.setText('[Jajujo (Jovejun.)] Kiritan no Tadashii Shitsuke-kata. (VOICEROID) [Chinese] [moye个人汉化] [Digital]')
-        self.captionLabel.setAlignment(QtCore.Qt.AlignLeading | QtCore.Qt.AlignLeft | QtCore.Qt.AlignTop)
+        self.captionLabel.setText('Kiritan no Tadashii Shitsuke-kata')
+        self.captionLabel.setAlignment(QtCore.Qt.AlignLeading | QtCore.Qt.AlignLeft | QtCore.Qt.AlignCenter)
         self.captionLabel.setWordWrap(True)
         self.horizontalLayout.addWidget(self.captionLabel)
 
@@ -178,8 +179,8 @@ class ImageWidget(QWidget):
         self.verticalLayout.addLayout(self.horizontalLayout)
         self.setLayout(self.verticalLayout)
 
-    def setupImage(self):
-        img_url = 'https://t.nhentai.net/galleries/1594289/thumb.jpg'
+    def setupImage(self, img_url):
+        #img_url = 'https://t.nhentai.net/galleries/1594289/thumb.jpg'
         img_data = requests.get(img_url)
         pix = QtGui.QPixmap()
         pix.loadFromData(img_data.content)

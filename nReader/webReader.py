@@ -11,7 +11,7 @@ from requests_html import HTMLSession
 from PyQt5 import QtCore, QtGui, QtWidgets
 from PyQt5.QtCore import Qt
 
-from ui.webReaderUi import UiMainWindow
+from ui.webReaderUi import UiMainWindow, ImageWidget
 
 
 NHENTAI = 'https://nhentai.net/'
@@ -32,13 +32,16 @@ class MainWindow(QtWidgets.QMainWindow):
         self.label_list = []
         self.pixmap_list = []
 
+
+        self.imageWidget = []
+
         self.scaleFactor = 1.0
 
 
 
         self.loadNhentai()
         self.addPreviewImage()
-        #self.loadPreviewImage()
+        self.loadPreviewImage()
 
         # signal connect
         self.ui.NumLineEdit.returnPressed.connect(self.startDisplay)
@@ -101,25 +104,33 @@ class MainWindow(QtWidgets.QMainWindow):
 
     def addPreviewImage(self):
         for i in range(int(self.page_num)):
-            self.pixmap_list.append(QtGui.QPixmap())
-            self.label_list.append(QtWidgets.QLabel())
-            sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Fixed, QtWidgets.QSizePolicy.Fixed)
-            self.label_list[i].setSizePolicy(sizePolicy)
-            self.label_list[i].setAlignment(QtCore.Qt.AlignCenter)
-            self.label_list[i].setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
-            #self.ui.formLayout.addRow()
-            self.ui.formLayout.addWidget(self.label_list[i])
-            # self.ui.formLayout.setWidget(0, QtWidgets.QFormLayout.LabelRole, self.label_list[i])
+            self.imageWidget.append(ImageWidget())
+            self.ui.formLayout.addWidget(self.imageWidget[i])
+
+        # for i in range(int(self.page_num)):
+        #     self.pixmap_list.append(QtGui.QPixmap())
+        #     self.label_list.append(QtWidgets.QLabel())
+        #     sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Fixed, QtWidgets.QSizePolicy.Fixed)
+        #     self.label_list[i].setSizePolicy(sizePolicy)
+        #     self.label_list[i].setAlignment(QtCore.Qt.AlignCenter)
+        #     self.label_list[i].setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
+        #     #self.ui.formLayout.addRow()
+        #     self.ui.formLayout.addWidget(self.label_list[i])
+        #     # self.ui.formLayout.setWidget(0, QtWidgets.QFormLayout.LabelRole, self.label_list[i])
 
     def loadPreviewImage(self):
         for i in range(int(self.page_num)):
             img_url = self.download_queue.get()
-            img_data = requests.get(img_url)
-            self.pixmap_list[i].loadFromData(img_data.content)
-            if not self.pixmap_list[i].isNull():
-                w = 250
-                self.label_list[i].setPixmap(self.pixmap_list[i].scaledToWidth(w))
-                self.label_list[i].setStyleSheet('background-color: #1d1f21')
+            self.imageWidget[i].setupImage(img_url)
+
+        # for i in range(int(self.page_num)):
+        #     img_url = self.download_queue.get()
+        #     img_data = requests.get(img_url)
+        #     self.pixmap_list[i].loadFromData(img_data.content)
+        #     if not self.pixmap_list[i].isNull():
+        #         w = 250
+        #         self.label_list[i].setPixmap(self.pixmap_list[i].scaledToWidth(w))
+        #         self.label_list[i].setStyleSheet('background-color: #1d1f21')
 
 
     def startDisplay(self):

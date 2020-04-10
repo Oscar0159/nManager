@@ -1,6 +1,7 @@
 QWidget {
   /* background-color: #fff; */
   background-color: #19232D;
+  /* background-color: #0D0D0D; */
   border: 0px solid #32414B;
   padding: 0px;
   color: #F0F0F0;
@@ -177,6 +178,10 @@ QGroupBox {
   font-weight: bold;
   border: 1px solid #32414B;
   border-radius: 4px;
+}
+
+QGroupBox QPushButton{
+  background-color: #000;
 }
 
 QGroupBox::title {
@@ -810,14 +815,10 @@ QAbstractSpinBox:selected {
 https://doc.qt.io/qt-5/stylesheet-examples.html#customizing-qframe
 
 --------------------------------------------------------------------------- */
-ImageWidget {
-  background-color: #000;
-}
-
 QLabel {
   /* background-color: #563251; */
   border: 1px solid #32414B;
-  padding: 5px;
+  padding: 0px;
   margin: 0px;
   color: #F0F0F0;
 }
