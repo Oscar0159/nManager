@@ -1,30 +1,27 @@
 # -*- coding: utf-8 -*-
 from PyQt5 import QtCore, QtGui, QtWidgets
 from PyQt5.QtCore import QPoint, QRect, QSize, Qt
-from PyQt5.QtWidgets import (QApplication, QLayout, QPushButton, QSizePolicy,
-        QWidget)
+from PyQt5.QtWidgets import QLayout, QPushButton, QSizePolicy
 
-class PageWindow(QtWidgets.QMainWindow):
-    gotoSignal = QtCore.pyqtSignal(str)
+# class PageWindow(QtWidgets.QMainWindow):
+#     gotoSignal = QtCore.pyqtSignal(str)
+#
+#     def goto(self, name):
+#         self.gotoSignal.emit(name)
 
-    def goto(self, name):
-        self.gotoSignal.emit(name)
 
-
-class NormalPage(PageWindow):
+class NormalUi(QtWidgets.QMainWindow):
     def __init__(self):
         super().__init__()
-        self.setupUi(self)
 
-    def setupUi(self, main_window):
         # main window
 
         # main central widget
-        self.central_widget = QtWidgets.QWidget(main_window)
-        main_window.setCentralWidget(self.central_widget)
+        self.central_widget = QtWidgets.QWidget()
+        self.setCentralWidget(self.central_widget)
 
         # main vertical layout
-        self.main_vlayout = QtWidgets.QVBoxLayout(main_window)
+        self.main_vlayout = QtWidgets.QVBoxLayout()
         self.central_widget.setLayout(self.main_vlayout)
 
         # main scroll area
@@ -57,27 +54,24 @@ class NormalPage(PageWindow):
         self.pagination_hlayout.addWidget(self.last_button)
 
 
-
-class GalleryPage(PageWindow):
+class GalleryUi(QtWidgets.QMainWindow):
     def __init__(self):
         super().__init__()
         pass
 
 
-class BookPage(PageWindow):
+class BookUi(QtWidgets.QMainWindow):
     def __init__(self):
         super().__init__()
-        self.setupUi(self)
 
-    def setupUi(self, main_window):
         # main window
 
         # main central widget
-        self.central_widget = QtWidgets.QWidget(main_window)
-        main_window.setCentralWidget(self.central_widget)
+        self.central_widget = QtWidgets.QWidget()
+        self.setCentralWidget(self.central_widget)
 
         # main vertical layout
-        self.main_vlayout = QtWidgets.QVBoxLayout(main_window)
+        self.main_vlayout = QtWidgets.QVBoxLayout()
         self.central_widget.setLayout(self.main_vlayout)
 
         # main scroll area
@@ -199,3 +193,11 @@ class FlowLayout(QLayout):
             lineHeight = max(lineHeight, item.sizeHint().height())
 
         return y + lineHeight - rect.y()
+
+class UrlButton(QPushButton):
+    def __init__(self, text: str, url: str):
+        super(UrlButton, self).__init__(text=text)
+        self.url = url
+
+    def click(self) -> None:
+        pass

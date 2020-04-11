@@ -2,8 +2,6 @@ from queue import Queue
 
 from requests_html import HTMLSession
 
-def pt(data):
-    print(f'{type(data)} : {data}')
 
 class HtmlManager:
     def __init__(self):
@@ -32,12 +30,22 @@ class NormalManager(HtmlManager):
             values = [result.html.find(f'a.{key}', first=False) for key in keys]
             self.pagination = dict(zip(keys, values))
 
-            for key, value in self.pagination.items():
-                print(f'{key} : {value}')
+            # for key, value in self.pagination.items():
+            #     print(f'{key} : {value}')
         except Exception as e:
             print(f'error: {e}')
         finally:
             session.close()
+
+    def addThumbnail(self):
+        for url in self.thumbnail:
+            pass
+
+    def addPagination(self):
+        for page in self.pagination['page'][::-1]:
+            print(f'{page.text} : {page.attrs["href"]}')
+            # url_button = UrlButton(text=f'{page.text}', url=f'{page.attrs["href"]}')
+            # self.ui.pagination_hlayout.insertWidget(index=2, widget=url_button)
 
 
 class GalleryManager(HtmlManager):
@@ -74,22 +82,20 @@ class GalleryManager(HtmlManager):
 class BookManager(HtmlManager):
     def __init__(self):
         super().__init__()
-        self.gallery_url = 'https://i.nhentai.net/galleries/'
         self.pages = 0
-        self.gallery_id = ''
         self.image_queue = Queue()  # 所有原圖
 
     def getData(self):
         session = HTMLSession()
         try:
             result = session.get(self.url)
-            self.gallery_id = result.html.search('"media_id":"{}"')[0]
+            gallery_id = result.html.search('"media_id":"{}"')[0]
             self.pages = result.html.search('<div>{} pages</div>')[0]
 
             thumbnail = [element.attrs['data-src']
                          for element in result.html.find('div#thumbnail-container img.lazyload', first=False)]
             image_format = [url.split('/')[-1].split('.')[1] for url in thumbnail]
-            image = [f'{self.gallery_url + self.gallery_id}/{index+1}.{format_}'
+            image = [f'https://i.nhentai.net/galleries/{gallery_id}/{index+1}.{format_}'
                      for index, format_ in enumerate(image_format)]
             [self.image_queue.put(url) for url in image]
 
@@ -102,6 +108,7 @@ class BookManager(HtmlManager):
 
 
 if __name__ == '__main__':
-    n = BookManager()
-    n.setUrl('https://nhentai.net/g/299015/')
+    n = NormalManager()
+    n.setUrl('https://nhentai.net/')
     n.getData()
+    n.addPagination()
