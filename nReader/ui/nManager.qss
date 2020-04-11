@@ -1,3 +1,6 @@
+
+*[mandatoryField="True"] { background-color: yellow }
+
 QWidget {
   /* background-color: #fff; */
   /* background-color: #19232D; */
@@ -169,6 +172,7 @@ QCheckBox::indicator:indeterminate:focus, QCheckBox::indicator:indeterminate:hov
   image: url(":/qss_icons/rc/checkbox_indeterminate_focus.png");
 }
 
+
 /* QGroupBox --------------------------------------------------------------
 
 https://doc.qt.io/qt-5/stylesheet-examples.html#customizing-qgroupbox
@@ -176,7 +180,7 @@ https://doc.qt.io/qt-5/stylesheet-examples.html#customizing-qgroupbox
 --------------------------------------------------------------------------- */
 QGroupBox {
   font-weight: bold;
-  border: 1px solid #32414B;
+  border: 1px solid #404040;
   border-radius: 4px;
 }
 

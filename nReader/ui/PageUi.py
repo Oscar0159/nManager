@@ -1,7 +1,8 @@
 # -*- coding: utf-8 -*-
-from PyQt5 import QtCore, QtGui, QtWidgets
-from PyQt5.QtCore import QPoint, QRect, QSize, Qt
 from PyQt5.QtWidgets import QLayout, QPushButton, QSizePolicy
+from PyQt5 import QtGui, QtWidgets
+from PyQt5.QtCore import QPoint, QRect, QSize, Qt
+
 
 # class PageWindow(QtWidgets.QMainWindow):
 #     gotoSignal = QtCore.pyqtSignal(str)
@@ -10,15 +11,13 @@ from PyQt5.QtWidgets import QLayout, QPushButton, QSizePolicy
 #         self.gotoSignal.emit(name)
 
 
-class NormalUi(QtWidgets.QMainWindow):
-    def __init__(self):
-        super().__init__()
-
+class NormalUi(object):
+    def setupUi(self, main_window):
         # main window
 
         # main central widget
         self.central_widget = QtWidgets.QWidget()
-        self.setCentralWidget(self.central_widget)
+        main_window.setCentralWidget(self.central_widget)
 
         # main vertical layout
         self.main_vlayout = QtWidgets.QVBoxLayout()
@@ -49,8 +48,8 @@ class NormalUi(QtWidgets.QMainWindow):
         self.last_button = QtWidgets.QPushButton(icon=QtGui.QIcon(QtGui.QPixmap('./icon/doubleRight_light.png')))
         self.last_button.setSizePolicy(QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Fixed, QtWidgets.QSizePolicy.Fixed))
         self.pagination_hlayout.addWidget(self.first_button)
-        self.pagination_hlayout.addWidget(self.previous_button, alignment=QtCore.Qt.AlignLeft)
-        self.pagination_hlayout.addWidget(self.next_button, alignment=QtCore.Qt.AlignRight)
+        self.pagination_hlayout.addWidget(self.previous_button, alignment=Qt.AlignLeft)
+        self.pagination_hlayout.addWidget(self.next_button, alignment=Qt.AlignRight)
         self.pagination_hlayout.addWidget(self.last_button)
 
 
@@ -102,9 +101,9 @@ class BookUi(QtWidgets.QMainWindow):
         self.last_button = QtWidgets.QPushButton(icon=QtGui.QIcon(QtGui.QPixmap('./icon/doubleRight_light.png')))
         self.last_button.setSizePolicy(QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Fixed, QtWidgets.QSizePolicy.Fixed))
         self.pagination_hlayout.addWidget(self.first_button)
-        self.pagination_hlayout.addWidget(self.previous_button, alignment=QtCore.Qt.AlignLeft)
+        self.pagination_hlayout.addWidget(self.previous_button, alignment=Qt.AlignLeft)
         self.pagination_hlayout.addWidget(self.page_line)
-        self.pagination_hlayout.addWidget(self.next_button, alignment=QtCore.Qt.AlignRight)
+        self.pagination_hlayout.addWidget(self.next_button, alignment=Qt.AlignRight)
         self.pagination_hlayout.addWidget(self.last_button)
 
 
@@ -193,11 +192,3 @@ class FlowLayout(QLayout):
             lineHeight = max(lineHeight, item.sizeHint().height())
 
         return y + lineHeight - rect.y()
-
-class UrlButton(QPushButton):
-    def __init__(self, text: str, url: str):
-        super(UrlButton, self).__init__(text=text)
-        self.url = url
-
-    def click(self) -> None:
-        pass

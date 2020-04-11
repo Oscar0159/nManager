@@ -14,7 +14,6 @@ class UiMainWindow(object):
 
 
         MainWindow.setWindowOpacity(0.95)
-        #MainWindow.setWindowFlags(Qt.FramelessWindowHint)
 
         # QLineEdit
         self.NumLineEdit = QtWidgets.QLineEdit()
@@ -28,8 +27,6 @@ class UiMainWindow(object):
         self.formLayout = QtWidgets.QFormLayout()
         self.formLayout.setLabelAlignment(QtCore.Qt.AlignHCenter | QtCore.Qt.AlignTop)
         self.formLayout.setFormAlignment(QtCore.Qt.AlignHCenter | QtCore.Qt.AlignTop)
-        # pushSpacerItem = QtWidgets.QSpacerItem(20, 40, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Expanding)
-        # self.formLayout.setItem(0, QtWidgets.QFormLayout.FieldRole, pushSpacerItem)
 
         # QGroupBox
         self.groupBox = QtWidgets.QGroupBox()
@@ -77,14 +74,8 @@ class UiMainWindow(object):
         self.hLayout.addWidget(self.downloadButton_1)
         self.hLayout.addWidget(self.downloadButton_2)
         spaceItem_L = QtWidgets.QSpacerItem(80, 20, QtWidgets.QSizePolicy.Preferred, QtWidgets.QSizePolicy.Minimum)
-        #self.hLayout.addItem(spaceItem_L)
         self.hLayout.addWidget(self.NumLineEdit)
-        spaceItem_R = QtWidgets.QSpacerItem(80, 20, QtWidgets.QSizePolicy.Preferred, QtWidgets.QSizePolicy.Minimum)
-        #self.hLayout.addItem(spaceItem_R)
         self.hLayout.addWidget(self.checkButton)
-        #self.hLayout.setStretch(3, 1)
-        #self.hLayout.setStretch(4, )
-        #self.hLayout.setStretch(5, 1)
 
         # QVBoxLayout
         self.vLayout = QtWidgets.QVBoxLayout()
@@ -107,19 +98,4 @@ class UiMainWindow(object):
         self.menubar.setGeometry(QtCore.QRect(0, 0, 551, 21))
         self.menubar.setObjectName("menubar")
         MainWindow.setMenuBar(self.menubar)
-
-
-    def retranslateUi(self, MainWindow):
-        _translate = QtCore.QCoreApplication.translate
-        MainWindow.setWindowTitle(_translate("MainWindow", "nReader"))
-
-
-
-# MainWindow.setLayout(self.layout)
-# QtCore.QMetaObject.connectSlotsByName(MainWindow)
-# MainWindow.setWindowFlags(Qt.FramelessWindowHint | Qt.Tool)
-# MainWindow.setAttribute(Qt.WA_NoSystemBackground, True)
-# MainWindow.setAttribute(Qt.WA_TranslucentBackground, True)
-# MainWindow.resized.connect(self.say)
-
 

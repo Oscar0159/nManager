@@ -1,6 +1,6 @@
 from PyQt5 import QtCore, QtGui, QtWidgets
 
-from ui.testUi import MainWindowUi
+from ui.nManagerUi import MainWindowUi
 from pageManager import NormalPage, GalleryPage, BookPage
 
 
@@ -25,12 +25,20 @@ class Window(QtWidgets.QMainWindow):
         self.ui.add_pagination_button.clicked.connect(self.addPage)
 
     def addMainPage(self):
-        self.register(NormalPage(), 'nhentai')
-        self.goto('nhentai')
+        name = 'nhentai'
+        url = 'https://nhentai.net/'
+        self.register(name)
+        self.goto(name)
+        self.my_page[name].setUrl(url)
+        self.my_page[name].setup()
 
     def addPage(self):
-        self.register(BookPage(), 'book')
-        self.goto('book')
+        name = 'test'
+        url = 'https://nhentai.net/?page=11'
+        self.register(name)
+        self.goto(name)
+        self.my_page[name].setUrl(url)
+        self.my_page[name].setup()
 
     def addPageButton(self, name):
         Button = PageButton(name)
@@ -38,27 +46,24 @@ class Window(QtWidgets.QMainWindow):
         Button.setSizePolicy(QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Fixed, QtWidgets.QSizePolicy.Fixed))
         self.ui.pagination_hlayout.insertWidget(len(self.my_page)-1, Button)
 
-    def register(self, widget, name):
-        pass
+    def register(self, name):
         # if name is exist in my_page
-        # self.my_page[name] = Page()
-        # self.ui.main_stack_widget.addWidget(self.my_page[name].ui)
-        # self.addPageButton(name)
-        # if isinstance(widget, PageWindow):
-        #     widget.gotoSignal.connect(self.goto)
+        self.my_page[name] = NormalPage()
+        self.ui.main_stack_widget.addWidget(self.my_page[name])
+        self.addPageButton(name)
 
     @QtCore.pyqtSlot(str)
     def goto(self, name):
         if name in self.my_page:
             widget = self.my_page[name]
-            self.ui.main_stack_widget.setCurrentWidget(self.my_page[name].ui)
+            self.ui.main_stack_widget.setCurrentWidget(widget)
 
 if __name__ == "__main__":
     import sys
 
     app = QtWidgets.QApplication(sys.argv)
 
-    with open('./ui/test.qss', 'r') as file:
+    with open('ui/nManager.qss', 'r') as file:
         app.setStyleSheet(file.read())
 
     w = Window()

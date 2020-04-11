@@ -86,7 +86,8 @@ class MainWindow(QtWidgets.QMainWindow):
     def adjustScrollBar(self, scrollBar, factor):
         # print(f'滾輪位置:{scrollBar.value()}')
         # print(f'滾窗大小: {scrollBar.pageStep()}')
-        scrollBar.setValue(int(scrollBar.value() + ((scrollBar.value() + (scrollBar.pageStep() / 2)) / ((self.scaleFactor -1) * 10 + (10 - 10 * factor)) * factor * 10)))
+        scrollBar.setValue(int(scrollBar.value() + ((scrollBar.value() + (scrollBar.pageStep() / 2)) /
+                                                    ((self.scaleFactor -1) * 10 + (10 - 10 * factor)) * factor * 10)))
         # print(f'after滾輪位置: {scrollBar.value()}')
 
     def startDisplay(self):
@@ -96,7 +97,7 @@ class MainWindow(QtWidgets.QMainWindow):
         self._getData()
         self._addImgLabel()
 
-        for i in range(self._thread_num):
+        for _ in range(self._thread_num):
             t = Thread(target=self._loadImg)
             t.setDaemon(True)
             t.start()

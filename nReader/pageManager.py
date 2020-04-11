@@ -1,3 +1,5 @@
+from queue import Queue
+from threading import Thread
 import requests
 from PyQt5 import QtCore, QtGui, QtWidgets
 
@@ -5,10 +7,61 @@ from ui.PageUi import NormalUi, GalleryUi, BookUi
 from htmManager import NormalManager, GalleryManager, BookManager
 
 
-class NormalPage:
-    def __init__(self):
+class UrlButton(QtWidgets.QPushButton):
+    loadPageSignal = QtCore.pyqtSignal(str)
+    def __init__(self, text: str, url: str):
+        super(UrlButton, self).__init__(text=text)
+        self.url = url
+
+        # self.setProperty('mandatoryField', "True")
+        self.clicked.connect(self.onClicked)
+
+    def onClicked(self):
+        self.loadPageSignal.emit(self.url)
+
+
+class NormalPage(QtWidgets.QMainWindow):
+    def __init__(self, parent=None):
+        super(NormalPage, self).__init__(parent)
         self.ui = NormalUi()
+        self.ui.setupUi(self)
         self.manager = NormalManager()
+
+    def setUrl(self, url):
+        self.manager.setUrl(url)
+
+    def setup(self):
+        self.manager.getData()
+        self.img_widget = []
+        self.q = Queue()
+        [self.q.put([index, url]) for index, url in enumerate(self.manager.thumbnail)]
+        for index in range(self.q.qsize()):
+            self.img_widget.append(ImageWidget())
+            self.ui.flow_layout.addWidget(self.img_widget[index])
+
+        for _ in range(10):
+            t = Thread(target=self.loadImage)
+            t.setDaemon(True)
+            t.start()
+
+        for page_element in self.manager.pagination['page'][::-1]:
+            url_button = UrlButton(page_element.text, 'https://nhentai.net/' + page_element.links.pop())
+            url_button.loadPageSignal.connect(self.loadPage)
+            self.ui.pagination_hlayout.insertWidget(2, url_button)
+
+    def loadImage(self):
+        while not self.q.empty():
+            index, url = self.q.get()
+            self.img_widget[index].setupImage(url)
+
+    def loadPage(self, url):
+        self.ui = NormalUi()
+        self.ui.setupUi(self)
+        self.manager = NormalManager()
+        self.manager.setUrl(url)
+        print(url)
+        self.setup()
+
 
 
 class GalleryPage:
@@ -27,7 +80,7 @@ class ImageWidget(QtWidgets.QGroupBox):
     def __init__(self):
         super(ImageWidget, self).__init__()
 
-        self.setStyleSheet('background-color: #396482;')
+        self.setStyleSheet('background-color: #404040;')
 
         self.verticalLayout = QtWidgets.QVBoxLayout()
         self.imageLabel = QtWidgets.QLabel()
@@ -79,3 +132,13 @@ class ImageWidget(QtWidgets.QGroupBox):
         pix.loadFromData(img_data.content)
         w = 250
         self.imageLabel.setPixmap(pix.scaledToWidth(w))
+
+
+if __name__ == '__main__':
+    import  sys
+    app = QtWidgets.QApplication([])
+    n = NormalPage()
+    n.show()
+    n.setUrl('https://nhentai.net/')
+    n.setup()
+    sys.exit(app.exec_())
