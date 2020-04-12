@@ -30,6 +30,7 @@ class NormalUi(object):
 
         # group box in main scroll area
         self.group_box = QtWidgets.QGroupBox()
+        self.group_box.setStyleSheet('background-color: #1F1F1F;')
         self.scroll_area.setWidget(self.group_box)
 
         # flow layout in group box

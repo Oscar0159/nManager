@@ -36,7 +36,12 @@ class NormalPage(QtWidgets.QMainWindow):
         self.q = Queue()
         [self.q.put([index, url]) for index, url in enumerate(self.manager.thumbnail)]
         for index in range(self.q.qsize()):
-            self.img_widget.append(ImageWidget())
+            image_widget = ImageWidget(url=self.manager.gallery_url[index],
+                                               image_path=f'./icon/{self.manager.language[index]}.png',
+                                               caption=self.manager.caption[index])
+            image_widget.groupClickSignal.connect(self.on_image_widget_clicked)
+            image_widget.downloadClickSignal.connect(self.on_download_button_clicked)
+            self.img_widget.append(image_widget)
             self.ui.flow_layout.addWidget(self.img_widget[index])
 
         for _ in range(10):
@@ -62,6 +67,14 @@ class NormalPage(QtWidgets.QMainWindow):
         print(url)
         self.setup()
 
+    def on_image_widget_clicked(self, url):
+        print(f'load: {url}')
+        # disconnect
+
+    def on_download_button_clicked(self, url):
+        print(f'download: {url}')
+        # disconnect
+
 
 
 class GalleryPage:
@@ -77,62 +90,67 @@ class BookPage:
 
 
 class ImageWidget(QtWidgets.QGroupBox):
-    def __init__(self):
+    groupClickSignal = QtCore.pyqtSignal(str)
+    downloadClickSignal = QtCore.pyqtSignal(str)
+    def __init__(self, url='', image_path='./icon/Japanese.png', caption=''):
         super(ImageWidget, self).__init__()
-
+        self.url = url
+        # 主要框架
+        self.setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
         self.setStyleSheet('background-color: #404040;')
 
+        # 垂直布局
         self.verticalLayout = QtWidgets.QVBoxLayout()
+        self.setLayout(self.verticalLayout)
+
+        # 圖片視窗
         self.imageLabel = QtWidgets.QLabel()
-        self.imageLabel.setText('ttestt')
         self.verticalLayout.addWidget(self.imageLabel)
 
+        # 水平布局
         self.horizontalLayout = QtWidgets.QHBoxLayout()
+        self.verticalLayout.addLayout(self.horizontalLayout)
 
         # 語言圖示
         self.languageLabel = QtWidgets.QLabel()
         self.languageLabel.setStyleSheet('padding: 0px;')
-        pixmap = QtGui.QPixmap('./icon/Japan.png')
+        pixmap = QtGui.QPixmap(image_path)
         self.languageLabel.setPixmap(pixmap.scaledToHeight(20))
-        #print(self.languageLabel.size())
         self.horizontalLayout.addWidget(self.languageLabel)
 
         # 標題
         self.captionLabel = QtWidgets.QLabel()
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Ignored, QtWidgets.QSizePolicy.Preferred)
-        #sizePolicy.setHeightForWidth(self.captionLabel.sizePolicy().hasHeightForWidth())
         self.captionLabel.setSizePolicy(sizePolicy)
-        self.captionLabel.setScaledContents(True)
-        self.captionLabel.setText('Kiritan no Tadashii Shitsuke-kata')
         self.captionLabel.setAlignment(QtCore.Qt.AlignLeading | QtCore.Qt.AlignLeft | QtCore.Qt.AlignCenter)
+        self.captionLabel.setScaledContents(True)
         self.captionLabel.setWordWrap(True)
+        self.captionLabel.setText(caption)
         self.horizontalLayout.addWidget(self.captionLabel)
 
         # 下載按鈕
         self.downloadButton = QtWidgets.QPushButton()
-        icon = QtGui.QIcon()
-        icon.addPixmap(QtGui.QPixmap('./icon/download_light.png'), QtGui.QIcon.Normal, QtGui.QIcon.Off)
-        self.downloadButton.setIcon(icon)
-
-        #print(self.downloadButton.size())
+        self.downloadButton.setIcon(QtGui.QIcon(QtGui.QPixmap('./icon/download_light.png')))
+        self.downloadButton.clicked.connect(self.downloadClicked)
         self.horizontalLayout.addWidget(self.downloadButton)
 
+        # 水平布局分配
         self.horizontalLayout.setStretch(0, 1)
         self.horizontalLayout.setStretch(1, 20)
         self.horizontalLayout.setStretch(2, 1)
 
-
-        self.verticalLayout.addLayout(self.horizontalLayout)
-        self.setLayout(self.verticalLayout)
-
     def setupImage(self, img_url):
-        #img_url = 'https://t.nhentai.net/galleries/1594289/thumb.jpg'
         img_data = requests.get(img_url)
         pix = QtGui.QPixmap()
         pix.loadFromData(img_data.content)
         w = 250
         self.imageLabel.setPixmap(pix.scaledToWidth(w))
 
+    def mousePressEvent(self, event: QtGui.QMouseEvent) -> None:
+        self.groupClickSignal.emit(self.url)
+
+    def downloadClicked(self):
+        self.downloadClickSignal.emit(self.url)
 
 if __name__ == '__main__':
     import  sys

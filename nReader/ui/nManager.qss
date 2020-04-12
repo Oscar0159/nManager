@@ -461,7 +461,7 @@ QAbstractScrollArea:disabled {
 
 --------------------------------------------------------------------------- */
 QScrollArea {
-  background-color: #19232D;
+  background-color: #1F1F1F;
 }
 
 /* QScrollBar -------------------------------------------------------------

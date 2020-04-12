@@ -2,6 +2,7 @@ from queue import Queue
 
 from requests_html import HTMLSession
 
+NHENTAI = 'https://nhentai.net'
 
 class HtmlManager:
     def __init__(self):
@@ -17,21 +18,43 @@ class HtmlManager:
 class NormalManager(HtmlManager):
     def __init__(self):
         super().__init__()
+        self.gallery_url = []
         self.thumbnail = []  # 所有縮圖
         self.pagination = {}
+        self.caption = []
+        self.language = []
 
     def getData(self):
         session = HTMLSession()
         try:
             result = session.get(self.url)
+            # self.gallery_url
+            self.gallery_url = [NHENTAI + url.links.pop() for url in result.html.find('a.cover', first=False)]
+
+            # self.thumbnail
             self.thumbnail = [element.attrs['data-src'] for element in result.html.find('img.lazyload', first=False)]
 
+            # self.pagination
             keys = ['first', 'previous', 'page', 'current', 'next', 'last']
             values = [result.html.find(f'a.{key}', first=False) for key in keys]
             self.pagination = dict(zip(keys, values))
 
-            # for key, value in self.pagination.items():
-            #     print(f'{key} : {value}')
+            # self.caption
+            self.caption = [div.text for div in result.html.find('div.caption', first=False)]
+
+            # self.language
+            div = result.html.find('div.gallery', first=False)
+            tag_str = [tag.attrs['data-tags'] for tag in div]
+            tags_number_list = [set(number.split(' ')) for number in tag_str]
+            for number_set in tags_number_list:
+                if '12227' in number_set:
+                    self.language.append('English')
+                elif '29963' in number_set:
+                    self.language.append('Chinese')
+                else:
+                    self.language.append('Japanese')
+
+
         except Exception as e:
             print(f'error: {e}')
         finally:
