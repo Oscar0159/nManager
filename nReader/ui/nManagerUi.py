@@ -7,9 +7,9 @@ class MainWindowUi(object):
         # main window
         main_window.setObjectName("MainWindow")
         main_window.setWindowTitle('nReader')
-        main_window.setMinimumWidth(400)
+        main_window.setMinimumWidth(356)
         main_window.setMinimumHeight(600)
-        main_window.resize(600, 900)
+        main_window.resize(616, 900)
 
         # main vertical layout
         self.main_vlayout = QtWidgets.QVBoxLayout(main_window)
@@ -59,3 +59,5 @@ class MainWindowUi(object):
         # main stack widget
         self.main_stack_widget = QtWidgets.QStackedWidget()
         self.main_vlayout.addWidget(self.main_stack_widget)
+
+

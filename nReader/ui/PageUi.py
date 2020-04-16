@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 from PyQt5.QtWidgets import QLayout, QPushButton, QSizePolicy
-from PyQt5 import QtGui, QtWidgets
+from PyQt5 import QtGui, QtWidgets, QtCore
 from PyQt5.QtCore import QPoint, QRect, QSize, Qt
 
 
@@ -42,33 +42,78 @@ class NormalUi(object):
         self.main_vlayout.addLayout(self.pagination_hlayout)
 
         # main page button
-        self.first_button = QtWidgets.QPushButton(icon=QtGui.QIcon(QtGui.QPixmap('./icon/doubleLeft_light.png')))
+        self.first_button = UrlButton(text='', url='',
+                                      icon=QtGui.QIcon(QtGui.QPixmap('./icon/doubleLeft_light.png')))
         self.first_button.setSizePolicy(QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Fixed, QtWidgets.QSizePolicy.Fixed))
-        self.previous_button = QtWidgets.QPushButton(icon=QtGui.QIcon(QtGui.QPixmap('./icon/left_light.png')))
-        self.next_button = QtWidgets.QPushButton(icon=QtGui.QIcon(QtGui.QPixmap('./icon/right_light.png')))
-        self.last_button = QtWidgets.QPushButton(icon=QtGui.QIcon(QtGui.QPixmap('./icon/doubleRight_light.png')))
+        self.previous_button = UrlButton(text='', url='',
+                                         icon=QtGui.QIcon(QtGui.QPixmap('./icon/left_light.png')))
+        self.next_button = UrlButton(text='', url='',
+                                     icon=QtGui.QIcon(QtGui.QPixmap('./icon/right_light.png')))
+        self.last_button = UrlButton(text='', url='',
+                                     icon=QtGui.QIcon(QtGui.QPixmap('./icon/doubleRight_light.png')))
         self.last_button.setSizePolicy(QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Fixed, QtWidgets.QSizePolicy.Fixed))
         self.pagination_hlayout.addWidget(self.first_button)
         self.pagination_hlayout.addWidget(self.previous_button, alignment=Qt.AlignLeft)
         self.pagination_hlayout.addWidget(self.next_button, alignment=Qt.AlignRight)
         self.pagination_hlayout.addWidget(self.last_button)
 
-
-class GalleryUi(QtWidgets.QMainWindow):
-    def __init__(self):
-        super().__init__()
-        pass
+        QtCore.QMetaObject.connectSlotsByName(main_window)
 
 
-class BookUi(QtWidgets.QMainWindow):
-    def __init__(self):
-        super().__init__()
+class GalleryUi(object):
+    def setupUi(self, main_window):
+        # main central widget
+        self.central_widget = QtWidgets.QWidget()
+        main_window.setCentralWidget(self.central_widget)
+
+        # main vertical layout
+        self.main_vlayout = QtWidgets.QVBoxLayout()
+        self.central_widget.setLayout(self.main_vlayout)
+
+        # main scroll area
+        self.scroll_area = QtWidgets.QScrollArea()
+        self.scroll_area.setWidgetResizable(True)
+        self.main_vlayout.addWidget(self.scroll_area)
+
+        # group box in main scroll area
+        self.group_box = QtWidgets.QGroupBox()
+        self.group_box.setStyleSheet('background-color: #1F1F1F;')
+        self.scroll_area.setWidget(self.group_box)
+
+        # vertical layout in group box
+        self.group_vlayout = QtWidgets.QVBoxLayout()
+        self.group_box.setLayout(self.group_vlayout)
+
+        # head layout in group vlayout
+        self.head_layout = FlowLayout()
+        self.group_vlayout.addLayout(self.head_layout)
+
+        # cover image
+        self.cover_image = QtWidgets.QLabel()
+        self.head_layout.addWidget(self.cover_image)
+
+        # thumbnail layout in group vlayout
+        self.thumbnail_layout = FlowLayout()
+        self.group_vlayout.addLayout(self.thumbnail_layout)
+
+        # relate layout in group vlayout
+        self.relate_layout = QtWidgets.QVBoxLayout()
+        self.relate_layout.addWidget(QtWidgets.QLabel('More Like This'), alignment=Qt.AlignCenter)
+        self.relate_flow_layout = FlowLayout()
+        self.relate_layout.addLayout(self.relate_flow_layout)
+        self.group_vlayout.addLayout(self.relate_layout)
+
+        QtCore.QMetaObject.connectSlotsByName(main_window)
+
+
+class BookUi(object):
+    def setupUi(self, main_window):
 
         # main window
 
         # main central widget
         self.central_widget = QtWidgets.QWidget()
-        self.setCentralWidget(self.central_widget)
+        main_window.setCentralWidget(self.central_widget)
 
         # main vertical layout
         self.main_vlayout = QtWidgets.QVBoxLayout()
@@ -106,6 +151,21 @@ class BookUi(QtWidgets.QMainWindow):
         self.pagination_hlayout.addWidget(self.page_line)
         self.pagination_hlayout.addWidget(self.next_button, alignment=Qt.AlignRight)
         self.pagination_hlayout.addWidget(self.last_button)
+
+        QtCore.QMetaObject.connectSlotsByName(main_window)
+
+
+class InfoGroupBox(QtWidgets.QGroupBox):
+    def __init__(self):
+        super(InfoGroupBox, self).__init__()
+        self.vertical_layout = QtWidgets.QVBoxLayout()
+        self.setLayout(self.vertical_layout)
+
+    def addTag(self, tag_text, *tag_button):
+        flow_layout = FlowLayout()
+        flow_layout.addWidget(QtWidgets.QLabel(tag_text))
+        for button in tag_button:
+            flow_layout.addWidget(button)
 
 
 class FlowLayout(QLayout):
@@ -193,3 +253,23 @@ class FlowLayout(QLayout):
             lineHeight = max(lineHeight, item.sizeHint().height())
 
         return y + lineHeight - rect.y()
+
+
+class UrlButton(QtWidgets.QPushButton):
+    loadPageSignal = QtCore.pyqtSignal(str)
+    def __init__(self, text='', url='', icon=QtGui.QIcon()):
+        super(UrlButton, self).__init__(text=text, icon=icon)
+        self.url = url
+
+        # self.setProperty('mandatoryField', "True")
+        self.clicked.connect(self.onClicked)
+
+    def setUrl(self, url):
+        self.url = url
+
+    def setCurrent(self):
+        # self.setProperty('mandatoryField', "True")
+        pass
+
+    def onClicked(self):
+        self.loadPageSignal.emit(self.url)

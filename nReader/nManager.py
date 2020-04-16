@@ -27,7 +27,7 @@ class Window(QtWidgets.QMainWindow):
     def addMainPage(self):
         name = 'nhentai'
         url = 'https://nhentai.net/'
-        self.register(name)
+        self.register(name, NormalPage)
         self.goto(name)
         self.my_page[name].setUrl(url)
         self.my_page[name].setup()
@@ -35,7 +35,7 @@ class Window(QtWidgets.QMainWindow):
     def addPage(self):
         name = 'test'
         url = 'https://nhentai.net/?page=11'
-        self.register(name)
+        self.register(name, NormalPage)
         self.goto(name)
         self.my_page[name].setUrl(url)
         self.my_page[name].setup()
@@ -46,9 +46,9 @@ class Window(QtWidgets.QMainWindow):
         Button.setSizePolicy(QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Fixed, QtWidgets.QSizePolicy.Fixed))
         self.ui.pagination_hlayout.insertWidget(len(self.my_page)-1, Button)
 
-    def register(self, name):
+    def register(self, name, page):
         # if name is exist in my_page
-        self.my_page[name] = NormalPage()
+        self.my_page[name] = page()
         self.ui.main_stack_widget.addWidget(self.my_page[name])
         self.addPageButton(name)
 
@@ -57,6 +57,7 @@ class Window(QtWidgets.QMainWindow):
         if name in self.my_page:
             widget = self.my_page[name]
             self.ui.main_stack_widget.setCurrentWidget(widget)
+
 
 if __name__ == "__main__":
     import sys

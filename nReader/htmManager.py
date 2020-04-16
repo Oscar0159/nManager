@@ -35,9 +35,13 @@ class NormalManager(HtmlManager):
             self.thumbnail = [element.attrs['data-src'] for element in result.html.find('img.lazyload', first=False)]
 
             # self.pagination
-            keys = ['first', 'previous', 'page', 'current', 'next', 'last']
-            values = [result.html.find(f'a.{key}', first=False) for key in keys]
+            keys = ['first', 'previous', 'current', 'next', 'last']
+            values = ['https://nhentai.net/' + result.html.find(f'a.{key}', first=True).links.pop()
+                      if result.html.find(f'a.{key}') else '' for key in keys]
             self.pagination = dict(zip(keys, values))
+
+            # self.pagination add 'page'
+            self.pagination['page'] = result.html.find('a.page', first=False)
 
             # self.caption
             self.caption = [div.text for div in result.html.find('div.caption', first=False)]
@@ -83,6 +87,9 @@ class GalleryManager(HtmlManager):
         session = HTMLSession()
         try:
             result = session.get(self.url)
+
+            self.cover = result.html.find('div#cover img', first=True).attrs['data-src']
+
             keys = ['h1', 'h2']
             self.heading = [result.html.find(f'div#info {key}', first=True).text for key in keys]
 

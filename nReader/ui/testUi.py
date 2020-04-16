@@ -16,8 +16,18 @@ class MainWindowUi(object):
         self.main_vlayout = QtWidgets.QVBoxLayout(self.central_widget)
 
         # add button
-        self.add_button = QtWidgets.QPushButton('Add!')
-        self.add_button.setObjectName('addButton')
+        self.add_button = MyButton('press me!')
+        self.add_button.setObjectName('myButton')
         self.main_vlayout.addWidget(self.add_button)
 
         QtCore.QMetaObject.connectSlotsByName(main_window)
+
+
+class MyButton(QtWidgets.QPushButton):
+    mySignal = QtCore.pyqtSignal(str)
+    def __init__(self, text):
+        super(MyButton, self).__init__(text)
+        self.clicked.connect(lambda: self.mySignal.emit('UMU'))
+
+    def clic(self):
+        self.mySignal.emit('UMU')
